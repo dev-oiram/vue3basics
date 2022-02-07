@@ -14,11 +14,12 @@
 
 <script>
 import { ref } from "vue";
+import pikachu from "../assets/pokemons/pikachu.png";
 
 export default {
   setup() {
     const nombre = ref("Pikachu");
-    const imagen = require("../assets/pokemons/pikachu.png");
+    const imagen = pikachu;
     return {
       nombre,
       imagen,
