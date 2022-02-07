@@ -1,16 +1,37 @@
 <template>
   <div>
     <h3>Main</h3>
-    <img src="@/assets/logo.png" alt="Logo" />
+    <div class="container">
+      <div class="card">
+        <img id="imgCard" v-bind:src="imagen" alt="Imagen" />
+        <div class="card-body">
+          <h5 class="card-title">{{ nombre }}</h5>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   setup() {
-    return {};
+    const nombre = ref("Pikachu");
+    const imagen = require("../assets/pokemons/pikachu.png");
+    return {
+      nombre,
+      imagen,
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+  width: 10rem;
+}
+#imgCard {
+  background-color: lightblue;
+}
+</style>
