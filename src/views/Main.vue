@@ -3,10 +3,10 @@
     <h3>Main</h3>
     <div class="container">
       <div class="card">
-        <img id="imgCard" v-bind:src="pokemon.imagen" alt="Imagen" />
+        <img v-bind:src="pokemon.imagen" alt="Imagen" :style="{ backgroundColor: pokemon.color }" />
         <div class="card-body">
           <h5 class="card-title">{{ pokemon.nombre }}</h5>
-          <button @click="verEvolucion" class="btn btn-primary">Evolución</button>
+          <button @click="verEvolucion" class="btn" :class="[!pokemon.evol.evoluciona ? 'btn-secondary' : 'btn-primary']" :disabled="!pokemon.evol.evoluciona">Evolución</button>
         </div>
         <div v-if="verEvol" class="card-footer">
           <i class="fas fa-angle-double-up"></i>
@@ -43,6 +43,7 @@ export default {
     const verEvol = ref(false);
     const pokemon = reactive({
       nombre: "Pikachu",
+      color: "#90ee90",
       imagen: pikachu,
       evol: {
         evoluciona: true,
@@ -74,8 +75,5 @@ export default {
 <style lang="scss" scoped>
 .card {
   width: 10rem;
-}
-#imgCard {
-  background-color: lightblue;
 }
 </style>
