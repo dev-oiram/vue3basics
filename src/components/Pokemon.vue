@@ -7,7 +7,12 @@
         :style="{ backgroundColor: pokemon.color }"
       />
       <div class="card-body">
-        <h5 class="card-title">{{ pokemon.nombre }}</h5>
+        <h5 class="card-title">
+          {{ pokemon.nombre }}
+          <span id="agregar" @click="agregar(pokemon)"
+            ><i class="fas fa-plus-circle"></i
+          ></span>
+        </h5>
         <button
           @click="verEvolucion"
           class="btn"
@@ -47,7 +52,7 @@ export default {
   props: {
     pokemon: Object,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const verEvol = ref(false);
     let pokemon = reactive({});
     const setPokemon = () => {
@@ -62,6 +67,10 @@ export default {
     const evolDetalle = computed(() => {
       return pokemon.nombre + " > " + pokemon.evol.nombre;
     });
+    // Agregar al carrito
+    const agregar = (pokemon) => {
+      emit("agregaCarrito", pokemon);
+    };
     onMounted(() => {
       setPokemon();
     });
@@ -70,6 +79,7 @@ export default {
       verEvolucion,
       cambio,
       evolDetalle,
+      agregar,
     };
   },
 };
@@ -78,5 +88,8 @@ export default {
 <style lang="scss" scoped>
 .card {
   width: 10rem;
+}
+#agregar {
+  cursor: pointer;
 }
 </style>
