@@ -11,7 +11,7 @@
         <div v-if="verEvol" class="card-footer">
           <i class="fas fa-angle-double-up"></i>
           <img v-bind:src="pokemon.evol.imagen" alt="Imagen" />
-          <p class="card-text">{{ pokemon.evol.nombre }}</p>
+          <p class="card-text">{{ evolDetalle }}</p>
           <span @mouseover="cambio(pokemon.evol.variant.normal)">
             <i class="fas fa-lightbulb m-2"></i>
           </span>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import pikachu from "../assets/pokemons/pikachu.png";
 import raichu from "../assets/pokemons/raichu.png";
 import raichushiny from "../assets/pokemons/raichushiny.png";
@@ -62,11 +62,15 @@ export default {
     const cambio = (valor) => {
       pokemon.evol.imagen = valor;
     };
+    const evolDetalle = computed(() => {
+      return pokemon.nombre + ' > ' + pokemon.evol.nombre
+    })
     return {
       pokemon,
       verEvol,
       verEvolucion,
       cambio,
+      evolDetalle,
     };
   },
 };
