@@ -3,8 +3,23 @@
     <h3>Main</h3>
     <div class="container">
       <div class="row">
-        <div v-for="pokemon in pokemones" :key="pokemon.id" class="col-md-6">
-          <Pokemon :pokemon="pokemon" />
+        <div class="col-md-8">
+          <div class="row">
+            <div v-for="pokemon in pokemones" :key="pokemon.id" class="col-md-6">
+              <Pokemon :pokemon="pokemon" @agregaCarrito="agregarCarrito" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5>
+            <span><i class="fas fa-shopping-cart"></i></span>({{ carrito.length }})Carrito
+          </h5>
+          <hr />
+          <div v-for="(producto, index) in carrito" :key="index">
+            <Producto :pokemon="producto" />
+            <span style="color: red" @click="quitarCarrito(index)">Quitar</span>
+            <hr />
+          </div>
         </div>
       </div>
     </div>
@@ -19,6 +34,7 @@ import raichushiny from "../assets/pokemons/raichushiny.png";
 import charizard from "../assets/pokemons/charizard.png";
 
 import Pokemon from "../components/Pokemon.vue";
+import Producto from "../components/Producto.vue";
 
 export default {
   setup() {
@@ -54,14 +70,36 @@ export default {
         ataques: ["Llamarada", "Volar", "BolaFuego"],
       },
     ]);
+    // Carrito
+    let carrito = ref([]);
+    const agregarCarrito = (pokemon) => {
+      carrito.value.push(pokemon);
+    };
+    const quitarCarrito = (id) => {
+      carrito.value.splice(id, 1);
+      const car = carrito.value;
+      carrito.value = [];
+      // Solucion Temporal
+      const timer = setTimeout(() => {
+        carrito.value = car;
+      }, 10);
+    };
     return {
       pokemones,
+      carrito,
+      agregarCarrito,
+      quitarCarrito,
     };
   },
   components: {
     Pokemon,
+    Producto,
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+span {
+  cursor: pointer;
+}
+</style>
